@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 Cypress.Commands.add('token', (email, senha) => {
     cy.request({
         method: 'POST',
@@ -25,4 +27,32 @@ Cypress.Commands.add('token', (email, senha) => {
           }, 
           failOnStatusCode: false
     })
+ })
+
+ Cypress.Commands.add('cadastrarUsuarios' , () =>{
+    cy.request({
+      method: 'POST',
+      url: 'usuarios',
+      body: {
+        "nome": faker.person.fullName(),
+        "email": faker.internet.email(),
+        "password": faker.internet.password(),
+        "administrador": "true"
+      },
+      failOnStatusCode: false
+    })
+ })
+
+ Cypress.Commands.add('cadastrarUsuariosSemFaker' , (usuario, email, senha) =>{
+    cy.request({
+      method: 'POST',
+      url: 'usuarios',
+      body: {
+        "nome": usuario,
+        "email": email,
+        "password": senha,
+        "administrador": "true"
+      },
+      failOnStatusCode: false
+    })
  })
